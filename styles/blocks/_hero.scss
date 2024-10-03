@@ -1,0 +1,114 @@
+.hero {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--section-padding-y); //Переменная содержить 70px, а между body и partners и есть 70px
+
+    @include desktop {
+        row-gap: 60px; // Потому что мы переопределили --section-padding-y e desktop на 30px
+    }
+
+    &__main {
+        display: flex;
+        justify-content: space-between;
+        align-items: start;
+        column-gap: 30px;//Просто указали адекватное значение, чтобы картинка не слипалась с текстом слева (в макете другое значение)
+
+        @include mobile {
+            flex-direction: column;
+        }
+    }
+
+    &__body {
+        display: flex;
+        align-items: start; // Кнопка растянулась на всюдину body поэтому так
+        flex-direction: column;
+        row-gap: 35px;
+        max-width: 531px;
+
+        /*Нам нужно поместить изображение справа в мобильной версии 
+        под заголовком h1, но нам мешает то, что это изображение не в блоке hero__body, 
+        тогда мы применяем contents, что приведет к тому, что содержимое блока hero__body будет 
+        выведено как обычно, но окружающий его блок (hero__body) будет полностью опущен,
+        и на все элементы будут действовать свойства hero__main*/
+
+        @include mobile {
+            display: contents; 
+        }
+    }
+
+    &__title {
+        @include mobile {
+            order: -2; 
+            /*Чем меньше значение order, тем раньше показан 
+            flex-элемент. Значение по умолчанию 0.*/
+            margin-bottom: 10px;
+        } 
+    }
+
+    &__description {
+        font-size: 20px;
+        line-height: 1.4;
+
+        @include mobile {
+            margin-bottom: 40px;
+        }
+    }
+
+    &__button {
+        @include mobile {
+            width: 100%;
+            max-width: 390px;
+            margin-inline: auto; //центруем
+        }
+    }
+
+    &__partners {
+
+        &-list {
+            display: flex;
+            justify-content: space-between; // но можно и так column-gap: 96px (значение по макету);
+            column-gap: 37px; //Расстояние между логотипами в мобильной версии
+            
+            @include tablet {
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                row-gap: 20px;
+                /*justify-content: space-evenly;
+                align-items: end; - Эти свойства применятся к элемнтам <li>, а чтобы изображения в их 
+                встали по центру - к <li> нужно пименить flex*/ 
+            }
+
+        }
+
+        &-item {
+            @include tablet {
+                display: flex;
+                justify-content: center;
+            }
+        }
+
+        &-image {
+            filter: grayscale(1);
+        }
+    }
+
+    &__image {
+        @include tablet {
+            max-width: 40%;
+            height: auto; //чтобы сохранить пропорции
+        }
+
+        @include mobile {
+            order: -1; 
+            /*Чем меньше значение order, тем раньше показан flex-элемент. Значение по умолчанию 0.*/
+            max-width: 100%; 
+            /*Если к изображению применить свойство max-width: 100%, оно останется в границах 
+            родительского элемента, даже если его изначальный размер больше. 
+            Если же изображение изначально меньше родителя, данное свойство никак 
+            на него не повлияет. То есть сейчас мы сделали элемент 100% зданой ему ширины*/
+            width: 100%;
+            /*А сейчас растянули его по ширине родителя*/
+            margin-bottom: 20px;
+        } 
+    }
+}

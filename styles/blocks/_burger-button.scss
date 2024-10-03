@@ -1,0 +1,28 @@
+.burger-button {
+    @include reset-button;
+    @include square(48px); //По макету кнопка 28х28, но чтобы сделать область нажатия больше мы установили 48, но визуально она будет как в макете
+
+    @include hover {
+        background-color: var(--color-accent);
+        
+    }
+
+    position: relative;
+    border-radius: var(--border-radius-small);
+
+    &::after {
+        @include abs-center;
+        //делаем первую полоску в бургере
+        content: '';
+        width: 50%;
+        height: 2px;
+        background-color: var(--color-dark);
+        border-radius: 5px;
+        //делаем вторую и третью полоску в бургере
+        box-shadow: 0 -8px, 0 8px; // тут мы как-буд-то делам две тени но задаем им только смещение по осям. Можно сделать и 4 тени 
+
+
+    }
+
+
+}

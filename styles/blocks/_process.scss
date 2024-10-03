@@ -1,0 +1,138 @@
+.process {
+    &__list {
+        display: flex;
+        flex-direction: column;
+        row-gap: 30px;
+        counter-reset: custom-counter;
+        /*Свойство counter-reset устанавливает переменную, в которой будет храниться 
+        счётчик отображений определенного элемента, а также начальное значение счётчика.*/
+        list-style: none;
+
+        @include mobile {
+            row-gap: 20px;
+        }
+    }
+
+    &__item {
+        --counterContent: counter(custom-counter);
+
+        counter-increment: custom-counter;
+        /*
+        Такой счётчик подсчитывает количество отображений элементов на странице и 
+        может выводиться с помощью свойства content и псевдоэлементов ::after и ::before. 
+        Это позволяет создавать списки (в том числе многоуровневые), в которых нумерация и вид 
+        задаются через стили.*/
+
+        &:nth-child(-n + 9) {    // Выбирает первые 9 элементов
+            --counterContent: '0' counter(custom-counter);
+        }
+    }
+
+    &__accordion {
+        --indicatorVerticalRotate: 90deg;
+
+        padding: 40px 60px;
+        background-color: var(--color-grey);
+        border: var(--border);
+        border-radius: var(--border-radius-large);
+        box-shadow: var(--shadow);
+        transition-duration: var(--transition-duration);
+
+        @include hover {
+            background-color: var(--color-accent);
+        }
+
+        @include mobile {
+            padding: 30px;
+        }
+
+        &[open] {
+            background-color: var(--color-accent);
+
+           /*/ .process__accordion-indicator::after{
+                rotate: 0deg;
+            } чтобы вот это все не писать мы создали переменную и ниже просто 
+            переназначим ее*/ 
+            --indicatorVerticalRotate: 0deg;
+
+
+        }
+
+        &-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            column-gap: 50px;
+            cursor: pointer;
+            user-select: none;
+
+            @include mobile {
+                column-gap: 28px;
+            }
+        }
+
+        &-title {
+            @include fluid-text(30, 18);
+
+            display: flex;
+            align-items: center;
+            column-gap: 25px;
+
+            @include mobile {
+                column-gap: 33px;
+            }
+
+            &::before {
+                content: var( --counterContent);  
+                /*
+                Выводим custom-counter в title.
+                Благодаря перменной  --counterContent: кторой мы присвоили значения счетчика
+                элементов counter(custom-counter), а птомом определили, что для первых элементов будет еще
+                и '0' вначале --counterContent: '0' counter(custom-counter), 
+                элементы с 10 не будут иметь 0 в начале.
+                */
+                font-size: 2em;
+
+                @include mobile {
+                    font-size: 30px;
+                }
+            }
+        }
+
+        &-indicator {
+            @include flex-center;
+            @include square(58px);
+
+            flex-shrink: 0;
+            position: relative; // Чтобы правильно спозиционировать псевдоэлемент
+            background-color: var(--color-grey);
+            border: var(--border);
+            border-radius: 50%;
+
+            &::before,
+            &::after {
+                content: '';
+                @include abs-center;
+
+                width: 45%; //ширина круга по макету 58, а полоски 18 вот и вышло примерно 30%
+                height: 10%;
+                background-color: var(--color-dark);
+            }
+
+            &::after {
+                rotate: var(--indicatorVerticalRotate);
+                transition-duration: var(--transition-duration);
+            }
+
+            @include mobile {
+                width: 30px;
+            }
+        }
+
+        &-body {
+            margin-top: 30px;
+            padding-top: 30px;
+            border-top: var(--border);
+        }
+    }
+}

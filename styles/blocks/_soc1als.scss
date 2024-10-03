@@ -1,0 +1,28 @@
+.soc1als {
+
+
+    &__list {
+        display: flex;
+        column-gap: 20px;
+    }
+
+    &__link {
+        @include flex-center(true); //true - чтобы был inline-flex
+        @include square(30px);
+
+        color: var(--color-dark); //красим внутреность иконки
+        background-color: var(--color-light); //красим фон
+        border-radius: 50%;
+
+        @include hover {
+            background-color: var(--color-accent);
+            scale: 130%;
+        }
+       
+
+        svg {
+            width: 50%;
+            height: 50%;
+        }
+    }
+}

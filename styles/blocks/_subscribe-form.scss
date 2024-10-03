@@ -1,0 +1,35 @@
+.subscribe-form {
+    padding: 58px 40px;
+    display: flex;
+    column-gap: 20px;
+    background-color: var(--color-dark-alt);
+    border-radius: var(--border-radius);
+
+    @include desktop {
+        flex-direction: column;
+        row-gap: 22px;
+        padding: 30px;
+        width: 100%;
+        max-width: 450px;
+    }
+    
+    /* Задать все значения можно и так, но мы насоздавали переменных
+    в блоке field, создали модификаторы field--drak-bg и field--big-height
+    чтобы добавить их в разметку. На мой взгляд так проще. Посмотри сравни*/
+/*
+    input {
+        height: var(--button-height);
+        background-color: var(--color-dark-alt);
+        border: 1px solid var(--color-light);
+        color: var(--color-accent);
+
+        &::placeholder {
+            color: var(--color-grey);
+        }
+
+        &:hover {
+            background-color: var(--color-dark);
+        }    
+    }
+*/
+}
